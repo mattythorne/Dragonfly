@@ -113,7 +113,7 @@ public class DataSet {
 			result += "\r\n";
 		}
 		
-		result += "\r\n";
+		result += "\r\nWeight : " + weight + "\r\n\r\n";
 		result += "Mutators : \r\n";
 		
 		for(Mutator mutator:this.mutators){

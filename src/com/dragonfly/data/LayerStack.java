@@ -48,13 +48,15 @@ public class LayerStack {
 		
 		for(DataSet dataLayer:this.dataSets) {
 			Double dataValue = dataLayer.getDataAt(x, y);
-			
+				
 			if(dataValue != 0.0) {
-				dataValue = 1 + dataLayer.getWeight();
-				weightedValue = weightedValue + dataValue;
+				double weight = dataLayer.getWeight();
+				
+				weightedValue = (weightedValue + 1.0) * (weight * 10);
 			}
-			
+				
 		}
+		
 		
 		return weightedValue;
 	}

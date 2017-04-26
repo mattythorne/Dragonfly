@@ -65,7 +65,7 @@ public class Insect {
 		System.out.println("Insect position : " + posX + ", " + posY);
 		
 		System.out.println("Personal Best : " + personalBest.posX + ", " + personalBest.posY + " " + personalBest.value);
-
+//
 		if(currentValue > personalBest.getValue()) {
 			personalBest.set(posX, posY, currentValue);
 		}

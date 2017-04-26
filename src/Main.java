@@ -15,19 +15,27 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		
-		DataSet test = new DataSet();
+		
 		// TODO Auto-generated method stub
 		
 		// 1. create datasets
 		// 2. add mutations
 		DataSet dataSetA = new DataSet();
-		dataSetA.setData(DataSets.testDataA(), 0.2);
+		dataSetA.setData(DataSets.randomDataSet(0, 20, 100, 100), 0.2);
 		
 		DataSet dataSetB = new DataSet();
-		dataSetB.setData(DataSets.testDataA(), 0.4);
+		dataSetB.setData(DataSets.randomDataSet(40, 100, 100, 100), 0.4);
+		
+		DataSet dataSetC = new DataSet();
+		dataSetC.setData(DataSets.randomDataSet(0, 20, 100, 100), 0.9);
+		
+		DataSet dataSetD = new DataSet();
+		dataSetD.setData(DataSets.randomDataSet(60, 70, 100, 100), 0.1);
 		
 		dataSetA.addMutation(new Mutator(Mutator.Type.BELOW, 10.0));
-		dataSetB.addMutation(new Mutator(Mutator.Type.ABOVE, 10.0));
+		dataSetB.addMutation(new Mutator(Mutator.Type.ABOVE, 80.0));
+		dataSetC.addMutation(new Mutator(Mutator.Type.ABOVE, 18.0));
+		dataSetD.addMutation(new Mutator(Mutator.Type.BELOW, 65.0));
 		
 		System.out.println(dataSetA.toString());
 		System.out.println(dataSetB.toString());

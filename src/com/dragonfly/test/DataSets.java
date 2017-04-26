@@ -26,6 +26,23 @@ public class DataSets {
 		return testData;
 	}
 	
+	public static ArrayList<ArrayList<Double>> randomDataSet (double min, double max, int sizeX, int sizeY) {
+		//10x10 random
+		ArrayList<ArrayList<Double>> testData = new ArrayList<ArrayList<Double>>();
+		Random random = new Random();
+		
+		for(int y = 0; y < sizeY; y++){
+			testData.add(new ArrayList<Double>());
+			for(int x = 0; x < sizeX; x++){
+				double value = min + (max - min) * random.nextDouble();
+				testData.get(y).add(value);
+			}
+		}
+		
+		
+		return testData;
+	}
+	
 	public static void outputSwarm(ArrayList<Insect> swarm){
 		
 		for(Insect insect:swarm){
