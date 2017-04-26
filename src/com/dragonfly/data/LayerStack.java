@@ -8,6 +8,10 @@ public class LayerStack {
 	private int fieldWidth;
 	private int fieldHeight;
 
+	public LayerStack() {
+		super();
+	}
+
 	public LayerStack(ArrayList<DataSet> dataSets) {
 		super();
 		this.dataSets = dataSets;
@@ -53,6 +57,15 @@ public class LayerStack {
 		}
 		
 		return weightedValue;
+	}
+	
+	public void addLayer(DataSet layer){
+		this.dataSets.add(layer);
+		getFieldDimensions();
+	}
+	
+	public String toString(){
+		return "Layers : " + dataSets.size() + "\r\n" + "Environment size : " + fieldWidth + ", " + fieldHeight + "\r\n";
 	}
 	
 }

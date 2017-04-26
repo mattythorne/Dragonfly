@@ -1,6 +1,11 @@
 package com.dragonfly.swarm;
 
+import java.util.ArrayList;
+
 import com.dragonfly.data.LayerStack;
+import com.dragonfly.swarm.Insect.Tendancy;
+
+import java.util.Random;
 
 /**
  * 1. Randomly initialise a swarm of insects at random positions in the search space
@@ -15,10 +20,12 @@ import com.dragonfly.data.LayerStack;
  */
 public class Engine {
 	private LayerStack layerStack;
+	private Layer dataLayer = new Layer(); 
+	private ArrayList<Insect> swarm = new ArrayList<Insect>(); 
 	private int swarmSize;
 	private int fieldWidth;
 	private int fieldHeight;
-
+	
 	public Engine(LayerStack layerStack, int swarmSize) {
 		super();
 		this.layerStack = layerStack;
@@ -27,5 +34,67 @@ public class Engine {
 		this.fieldWidth = layerStack.getFieldWidth();
 	}
 	
+	public void start(int iterations) {
+		createDataLayer();
+		System.out.println(dataLayer.toString());
+		createInsects();
+		
+		for(int n = 0; n < iterations; n++) {
+			iterateSwarm();
+		}
+	}
+	
+	
+	private void createDataLayer() {
+		this.dataLayer.setySize(this.fieldHeight);
+		this.dataLayer.setxSize(this.fieldWidth);
+		this.dataLayer.initialise();
+		
+		System.out.println("initialised");
+		for(int y = 0; y < this.fieldHeight; y++) {
+			for(int x = 0; x < this.fieldWidth; x++) {
+				dataLayer.setDataAt(x, y, layerStack.getWeightedValue(x, y));
+			}
+		}
+	}
+	
+	
+	private void createInsects() {
+		Random random = new Random();
+		System.out.println("Insect Starting Positions : ");
+		for(int n=0; n < this.swarmSize; n++) {
+			int x = random.nextInt(this.fieldWidth);
+			int y = random.nextInt(this.fieldHeight);
+			swarm.add(new Insect(x, y, this.fieldWidth, this.fieldHeight, Tendancy.AUDACIOUS));
+			
+			
+			System.out.println(x + ", " + y);
+			
+		}
+	}
+	
+	// NEEDS HELP
+	private void iterateSwarm() {
+		
+		for(Insect insect:this.swarm) insect.move(dataLayer.getDataAt(insect.getPosX(), insect.getPosY()), getGlobalBest());
+	}
+	
+	private Best getGlobalBest(){
+		Best globalBest = new Best(0.0, 0, 0);
+		for(Insect insect:this.swarm) {
+			if(insect.getPersonalBest().value > globalBest.value) globalBest = insect.getPersonalBest(); 
+		}
+		if(globalBest.value == 0.0) {
+			globalBest.posX = this.fieldWidth/2;
+			globalBest.posY = this.fieldHeight/2;
+		}
+		
+		System.out.println("Global Best : " + globalBest.value);
+		return globalBest;
+	}
+
+	public ArrayList<Insect> getSwarm() {
+		return swarm;
+	}
 	
 }

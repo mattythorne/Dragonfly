@@ -7,13 +7,13 @@ public class Mutator {
 	private double lowValue;
 	private double highValue;
 	
-	Mutator(Type mutationType, double value) {
+	public Mutator(Type mutationType, double value) {
 		super();
 		this.setMutationType(mutationType);
 		this.setLowValue(value);
 	}
 
-	Mutator(int mutationType, double lowValue, double highValue) {
+	public Mutator(Type between, double lowValue, double highValue) {
 		super();
 		this.setMutationType(Type.BETWEEN);
 		this.setLowValue(lowValue);
@@ -45,7 +45,7 @@ public class Mutator {
 	}
 
 	public Double mutate(Double value){
-		Double mutationResult=0.0;
+		Double mutationResult=value;
 		
 		switch (mutationType) {
 			case BELOW		:	if(value<lowValue) mutationResult=0.0;
@@ -63,6 +63,8 @@ public class Mutator {
 		return mutationResult;
 	}
 
-	
+	public String toString(){
+		return "type : " + mutationType + "\r\n" + "lowValue : " + lowValue + "\r\n" + "highValue : " + highValue + "\r\n";
+	}
 	
 }

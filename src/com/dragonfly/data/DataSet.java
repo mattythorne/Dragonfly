@@ -27,12 +27,9 @@ public class DataSet {
 	public DataSet(int xSize, int ySize, double weight, ArrayList<Mutator> mutators, ArrayList<ArrayList<Double>> data) {
 		super();	
 		setMutators(mutators);
-		setData(data);
-		setySize(data.size());
-		setWeight(weight);
-		ArrayList<Double> row = new ArrayList<Double>();
-		row = data.get(0);
-		setxSize(row.size());
+		setData(data, weight);
+		
+		
 		
 	}
 	
@@ -57,8 +54,13 @@ public class DataSet {
 	public ArrayList<ArrayList<Double>> getData() {
 		return data;
 	}
-	private void setData(ArrayList<ArrayList<Double>> data) {
+	public void setData(ArrayList<ArrayList<Double>> data, Double weight) {
 		this.data = data;
+		setySize(data.size());
+		ArrayList<Double> row = new ArrayList<Double>();
+		row = data.get(0);
+		setxSize(row.size());
+		setWeight(weight);
 	}
 	
 	public double getDataAt(int x, int y) {
@@ -85,16 +87,40 @@ public class DataSet {
 	}
 
 	public void mutate() {
-		
+		for(Mutator mutator:this.mutators){
 		for(ArrayList<Double> row:this.data){
 			for(Double dataValue:row){
-				for(Mutator mutator:this.mutators){
-					row.set(row.indexOf(dataValue), mutator.mutate(dataValue));
+				int column = row.indexOf(dataValue);
+					row.set(column, mutator.mutate(dataValue));
 				}
 			}
 		}
 	}
 	
+	public void addMutation(Mutator mutator) {
+		this.mutators.add(mutator);
+		System.out.println(mutator.toString());
+		
+	}
 	
+	public String toString(){
+		String result = "";
+		
+		for(ArrayList<Double> row:this.data){
+			for(Double dataValue:row){
+				result += dataValue.toString() + ", ";
+			}
+			result += "\r\n";
+		}
+		
+		result += "\r\n";
+		result += "Mutators : \r\n";
+		
+		for(Mutator mutator:this.mutators){
+			result += mutator.toString() + "\r\n";
+		}
+		
+		return result;
+	}
 
 }
