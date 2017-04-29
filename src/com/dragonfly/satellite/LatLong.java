@@ -30,6 +30,8 @@ public class LatLong {
 		this.longitude = longitude;
 	}
 	
-	
+	public String toString(){
+		return this.latitude.toString() + ", " + this.longitude.toString();
+	}
 	
 }

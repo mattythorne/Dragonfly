@@ -1,7 +1,10 @@
 /**
  * 
  */
+import java.util.ArrayList;
+
 import com.dragonfly.data.*;
+import com.dragonfly.satellite.LatLong;
 import com.dragonfly.swarm.Engine;
 import com.dragonfly.test.*;
 /**
@@ -48,7 +51,9 @@ public class Main {
 		System.out.println(dataSetB.toString());
 		// 4. add datasets to a layerstack
 		
-		LayerStack searchSpace = new LayerStack();
+		LatLong origin = new LatLong(-20.8125,22.640625); //Southwest boundary
+		LatLong boundary = new LatLong(-20.25,23.484375); //Northeast boundary
+		LayerStack searchSpace = new LayerStack(origin, boundary);
 		searchSpace.addLayer(dataSetA);
 		searchSpace.addLayer(dataSetB);
 		
@@ -61,6 +66,12 @@ public class Main {
 		// 6. start engine
 		engine.start(3);
 		DataSets.outputSwarm(engine.getSwarm());
+		ArrayList<LatLong> hotspots = engine.getHotspots();
+		
+		for(LatLong hotspot:hotspots) {
+			System.out.println(hotspot.toString());
+		}
+		
 		System.out.println("done...");
 	}
 

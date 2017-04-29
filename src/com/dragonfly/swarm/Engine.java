@@ -3,6 +3,7 @@ package com.dragonfly.swarm;
 import java.util.ArrayList;
 
 import com.dragonfly.data.LayerStack;
+import com.dragonfly.satellite.LatLong;
 import com.dragonfly.swarm.Insect.Tendancy;
 
 import java.util.Random;
@@ -95,6 +96,16 @@ public class Engine {
 
 	public ArrayList<Insect> getSwarm() {
 		return swarm;
+	}
+
+	public ArrayList<LatLong> getHotspots() {
+		ArrayList<LatLong> hotspots = new ArrayList<LatLong>();
+		Best globalBest = getGlobalBest();
+		hotspots.add(layerStack.convertDataPoint(globalBest.getPosX(), globalBest.getPosY()));
+		for(Insect insect:this.swarm){
+			hotspots.add(layerStack.convertDataPoint(insect.getPersonalBest().getPosX(), insect.getPersonalBest().getPosY()));
+		}
+		return hotspots;
 	}
 	
 }
