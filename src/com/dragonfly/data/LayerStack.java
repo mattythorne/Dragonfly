@@ -2,20 +2,33 @@ package com.dragonfly.data;
 
 import java.util.ArrayList;
 
+import com.dragonfly.satellite.LatLong;
+
 public class LayerStack {
 	
 	public ArrayList<DataSet> dataSets = new ArrayList<DataSet>();
 	private int fieldWidth;
 	private int fieldHeight;
+	private LatLong origin = new LatLong();
+	private LatLong boundary = new LatLong();
 
 	public LayerStack() {
 		super();
 	}
 
-	public LayerStack(ArrayList<DataSet> dataSets) {
+	public LayerStack(LatLong origin, LatLong boundary) {
+		super();
+		
+		this.origin = origin;
+		this.boundary = boundary;
+	}
+	
+	public LayerStack(ArrayList<DataSet> dataSets, LatLong origin, LatLong boundary) {
 		super();
 		this.dataSets = dataSets;
 		getFieldDimensions();
+		this.origin = origin;
+		this.boundary = boundary;
 	}
 	
 	public int getFieldWidth() {
@@ -41,6 +54,24 @@ public class LayerStack {
 	}
 
 	
+	public LatLong getOrigin() {
+		return origin;
+	}
+
+	//Origin is southwest point
+	public void setOrigin(LatLong origin) {
+		this.origin = origin;
+	}
+
+	public LatLong getBoundary() {
+		return boundary;
+	}
+
+	//boundary is northeast point
+	public void setBoundary(LatLong boundary) {
+		this.boundary = boundary;
+	}
+
 	// Needs improvement
 	public Double getWeightedValue(int x, int y){
 		
@@ -68,6 +99,16 @@ public class LayerStack {
 	
 	public String toString(){
 		return "Layers : " + dataSets.size() + "\r\n" + "Environment size : " + fieldWidth + ", " + fieldHeight + "\r\n";
+	}
+	
+	public LatLong convertDataPoint(int x, int y){
+		LatLong result = new LatLong();
+		
+		result.setLatitude(origin.latitude + ((origin.latitude - boundary.latitude)/fieldHeight));
+		result.setLongitude(origin.longitude + ((boundary.longitude - origin.longitude)/fieldWidth));
+		
+		
+		return result;
 	}
 	
 }
