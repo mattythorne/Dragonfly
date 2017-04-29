@@ -1,6 +1,8 @@
 package com.dragonfly.swarm;
 
+
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 import com.dragonfly.data.LayerStack;
 import com.dragonfly.satellite.LatLong;
@@ -41,6 +43,7 @@ public class Engine {
 		createInsects();
 		
 		for(int n = 0; n < iterations; n++) {
+			System.out.println("\r\nIteration : " + n + "\r\n");
 			iterateSwarm();
 		}
 	}
@@ -90,7 +93,7 @@ public class Engine {
 			globalBest.posY = this.fieldHeight/2;
 		}
 		
-		System.out.println("Global Best : " + globalBest.value);
+		System.out.println("Global Best : " + globalBest.getPosX() + ", " + globalBest.getPosY() + " : " + globalBest.value);
 		return globalBest;
 	}
 
@@ -98,8 +101,8 @@ public class Engine {
 		return swarm;
 	}
 
-	public ArrayList<LatLong> getHotspots() {
-		ArrayList<LatLong> hotspots = new ArrayList<LatLong>();
+	public LinkedHashSet<LatLong> getHotspots() {
+		LinkedHashSet<LatLong> hotspots = new LinkedHashSet<LatLong>();
 		Best globalBest = getGlobalBest();
 		hotspots.add(layerStack.convertDataPoint(globalBest.getPosX(), globalBest.getPosY()));
 		for(Insect insect:this.swarm){

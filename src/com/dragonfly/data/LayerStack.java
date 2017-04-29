@@ -104,8 +104,8 @@ public class LayerStack {
 	public LatLong convertDataPoint(int x, int y){
 		LatLong result = new LatLong();
 		
-		result.setLatitude(origin.latitude + ((origin.latitude - boundary.latitude)/fieldHeight));
-		result.setLongitude(origin.longitude + ((boundary.longitude - origin.longitude)/fieldWidth));
+		result.setLatitude(origin.latitude + (((boundary.latitude - origin.latitude)/fieldHeight)*y));
+		result.setLongitude(origin.longitude + (((boundary.longitude - origin.longitude)/fieldWidth)*x));
 		
 		
 		return result;

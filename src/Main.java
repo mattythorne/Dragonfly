@@ -2,6 +2,8 @@
  * 
  */
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import com.dragonfly.data.*;
 import com.dragonfly.satellite.LatLong;
@@ -64,9 +66,9 @@ public class Main {
 		Engine engine = new Engine(searchSpace, 20);
 		
 		// 6. start engine
-		engine.start(3);
+		engine.start(10);
 		DataSets.outputSwarm(engine.getSwarm());
-		ArrayList<LatLong> hotspots = engine.getHotspots();
+		HashSet<LatLong> hotspots = engine.getHotspots();
 		
 		for(LatLong hotspot:hotspots) {
 			System.out.println(hotspot.toString());
